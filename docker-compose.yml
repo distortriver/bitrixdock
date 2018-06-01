@@ -3,20 +3,20 @@ version: '2'
 services:
     php:
         build: ./${PHP_VERSION}
-        container_name: php
+        container_name: ${PROJECT_NAME}php
         volumes_from:
             - source
         ports:
             - '${INTERFACE}:9000:9000'
         links:
-            - mysql
+            - mariadb
             - memcached
         networks:
-            - bitrix
+            - bitrixdev
         restart: always
     web_server:
         build: ./${WEB_SERVER_TYPE}
-        container_name: webserver
+        container_name: ${PROJECT_NAME}webserver
         depends_on:
             - source
         volumes_from:
@@ -27,13 +27,13 @@ services:
         links:
             - php
         networks: 
-            - bitrix
+            - bitrixdev
         restart: always
-    mysql:
-        build: ./mysql
-        container_name: mysql
-        volumes_from:
-            - source
+    mariadb:
+        build: ./mariadb
+        container_name: ${PROJECT_NAME}mariadb
+        volumes:
+            - mysql:/var/lib/mariadb
         ports:
             - '${INTERFACE}:3306:3306'
         environment:
@@ -42,21 +42,21 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         networks:
-            - bitrix
+            - bitrixdev
         restart: always
     memcached:
         image: memcached:1.5-alpine
-        container_name: memcached
+        container_name: ${PROJECT_NAME}memcached
         volumes_from:
             - source
         ports:
             - '${INTERFACE}:11211:11211'
         networks:
-            - bitrix
+            - bitrixdev
         restart: always
     source:
         image: alpine:latest
-        container_name: source
+        container_name: ${PROJECT_NAME}source
         volumes:
             - ./logs/${WEB_SERVER_TYPE}:/var/log/${WEB_SERVER_TYPE}
             - ./logs/php:/var/log/php
@@ -65,14 +65,14 @@ services:
             - ./data/mysql:/var/lib/mysql
             - ./data/memcached:/var/lib/memcached
             - ./www/html:/var/www/html
-            - ${SITE_PATH}:/var/www/bitrix
-            - /etc/localtime:/etc/localtime/:ro
         networks:
-            - bitrix
+            - bitrixdev
 networks:
-    bitrix:
+    bitrixdev:
         driver: bridge
         ipam:
             driver: default
             config:
-                - subnet: 10.100.0.0/24
+                - subnet: ${IPV4}/24
+volumes:
+    mysql:
