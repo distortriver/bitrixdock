@@ -2,3 +2,7 @@
 /logs
 /data
 .env
+.DS_Store
+*.sql
+/www/html/
+!/www/html/index.php

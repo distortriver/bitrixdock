@@ -35,7 +35,7 @@ source ~/.bashrc
 ### Начало работы
 - Склонируйте репозиторий bitrixdock
 ```
-git clone git@github.com:bitrixdock/bitrixdock.git
+git clone git@github.com:distortriver/bitrixdock.git
 ```
 
 - Выполните настройку окружения
@@ -57,6 +57,8 @@ MYSQL_USER=bitrix          # Пользователь базы данных
 MYSQL_PASSWORD=123         # Пароль для доступа к базе данных
 MYSQL_ROOT_PASSWORD=123    # Пароль для пользователя root от базы данных
 INTERFACE=0.0.0.0          # На данный интерфейс будут проксироваться порты
+IPV4=10.100.1.0            # Внутренний IP, для множества проектов его нужно заменять
+PROJECT_NAME=project       # Название проекта, для уникальных названий контейнеров
 SITE_PATH=/var/www/bitrix  # Путь к директории Вашего сайта
 
 ```
@@ -70,7 +72,7 @@ docker-compose up -d
 Откройте IP машины в браузере.
 
 Если у вас всё получилось будем благодарны за звёздочку :)  
-Ошибки ждём в [issue](https://github.com/bitrixdock/bitrixdock/issues)  
+Ошибки ждём в [issue](https://github.com/distortriver/bitrixdock/issues)  
 Приятной работы!  
 
 ## Примечание
@@ -88,7 +90,7 @@ P.S.
 Виртуальная машина от разработчиков битрикс на Apache, а у нас на Nginx, а он работает намного быстрее и кушает меньше памяти.
 
 # Ищем контрибьюторов  
-Помогите развитию проекта! Требуется закрывать задачи в [issue](https://github.com/bitrixdock/bitrixdock/issues)
+Помогите развитию проекта! Требуется закрывать задачи в [issue](https://github.com/distortriver/bitrixdock/issues)
 
 # Рекомендуем
 - Бекап БД в FTP хранилище по расписанию https://github.com/vmpartner/mysql-buckup
